@@ -4,7 +4,7 @@ import platform
 
 def printer(board):
     # covert board into a string array
-    alphabet = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ ")
+    alphabet = list("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ")  # lower case are for blank tiles
     board = np.array(board, dtype='<U2')  # convert dtype to string with 2 characters
 
     # set each of the elements to the appropriate alphabet (use a more efficient method?)
@@ -27,7 +27,7 @@ def printer(board):
         board2 = np.array(board, copy=True)
         special_words = np.array([' ' for x in range(15 * 15)], dtype='<U2')  # initialise an empty array
         special_words = special_words.reshape((15, 15))
-        
+
         # coloringdict creates a dictionary for formatting functions to be used later
         coloringdict = {'TL': (lambda x: " " + termcolor.colored("   ", 'white', 'on_cyan') + " "),
                         'TW': (lambda x: " " + termcolor.colored("   ", 'white', 'on_red') + " "),
@@ -36,8 +36,11 @@ def printer(board):
         for i in list([x for x in list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")]):
             coloringdict[i] = lambda x: termcolor.colored(" ", 'red', 'on_magenta') + " " + x + " " + termcolor.colored(
                 " ", 'red', 'on_magenta')
+        for i in list([x for x in list("abcdefghijklmnoprstuvwxyz")]):
+            coloringdict[i] = lambda x: termcolor.colored(" ", 'red', 'on_white') + " " + x + " " + termcolor.colored(
+                " ", 'red', 'on_white')
         coloringdict[' '] = lambda x: "     "
-        
+
         # Set appropriate places on the board to the special words
         text = 'TW'
         special_words[np.array([0, 0, 0, 7, 7, 14, 14, 14]), np.array([0, 7, 14, 0, 14, 0, 7, 14])] = text
@@ -53,7 +56,7 @@ def printer(board):
                 [3, 11, 6, 8, 0, 7, 14, 2, 6, 8, 12, 3, 11, 2, 6, 8, 12, 0, 7, 14, 6, 8, 3, 11])] = text
         board2[np.logical_and(board == ' ', special_words != ' ')] = special_words[
             np.logical_and(board == ' ', special_words != ' ')]  # Only the places where there are no tiles are replaced
-            
+
         # Actual printing
         print("     |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10 |  11 |  12 |  13 |  14 |  15 |")
         print("  ----------------------------------------------------------------------------------------------")
@@ -64,13 +67,15 @@ def printer(board):
                 print(coloringdict[board2[j][i]](board2[j][i]) + "|", end='')
             print("")
             print("  ----------------------------------------------------------------------------------------------")
-            
+
         # Print legend
         print(termcolor.colored(" ", 'red', 'on_magenta') + ": Tile, ", end='')
         print(termcolor.colored(" ", 'red', 'on_red') + ": TW, ", end='')
         print(termcolor.colored(" ", 'red', 'on_yellow') + ": DW, ", end='')
         print(termcolor.colored(" ", 'red', 'on_cyan') + ": TL, ", end='')
-        print(termcolor.colored(" ", 'red', 'on_blue') + ": DL, ")
+        print(termcolor.colored(" ", 'red', 'on_blue') + ": DL")
+        print(termcolor.colored(" ", 'red', 'on_magenta') + ": normal tile, ",end='')
+        print(termcolor.colored(" ", 'red', 'on_white') + ": blank tile ")
 
     # Non-color play (not recommended)
     else:
