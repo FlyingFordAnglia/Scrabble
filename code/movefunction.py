@@ -8,7 +8,7 @@ board=numpy.zeros([15,15],dtype=int)+52
 
 #letternumberkey dictionary to translate the integers on board to strings whenever necessary
 l1=dict(zip(string.ascii_uppercase,list(range(0,26,1))))
-l2=dict(zip(string.ascii_lowercase,list(range(26,52,1))))
+l2 = dict(zip(string.ascii_lowercase,list(range(26,52,1))))
 letternumberkey={**l1,**l2}
 letternumberkey[' ']=52
 
