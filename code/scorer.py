@@ -5,6 +5,8 @@ import numpy as np
 l=list(string.ascii_uppercase)
 scoretile=[1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10]
 letters_score=dict(zip(l,scoretile))
+for i in list(string.ascii_lowercase):
+    letters_score[i]=0
 
 tw=[list(a) for a in zip([0, 0, 0, 7, 7, 14, 14, 14],[0, 7, 14, 0, 14, 0, 7, 14])]
 dw=[list(a) for a in zip([1, 1, 2, 2, 3, 3, 4, 4, 7, 10, 10, 11, 11, 12, 12, 13, 13],[1, 13, 2, 12, 3, 11, 4, 10, 7, 4, 10, 3, 11, 2, 12, 1, 13])]
