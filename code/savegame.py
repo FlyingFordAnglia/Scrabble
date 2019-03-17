@@ -1,37 +1,33 @@
-# Save game to file 'board.txt'
+# Save game to and load game from file
+import numpy as np
 
-import numpy
 
-# save board
+def savegame(board, racks, players, turn, filename='savegame.sv'):
+    # create header for the active racks, player scores, players names, and the active turn
+    racks = list(map(lambda x: ''.join(x), racks))  # for each rack, make it into a single string
+    racks = ';'.join(racks) + ':'  # combine all racks into a string
+    scores = [str(i.score) for i in players]
+    scores = ';'.join(scores) + ':'  # single string for player scores
+    names = [i.name for i in players]
+    names = ';'.join(names) + ':'  # single string for player names
+    turn = str(turn)
+    np.savetxt(filename, board, header=racks + scores + names + turn, fmt='%d', delimiter=',')
 
-numpy.savetxt('board.txt', board, fmt='%d', delimiter=',')
 
-# load board
-
-board = numpy.genfromtxt('board.txt', dtype=int, delimiter=',',
-                         max_rows=15)
-
-# save racks
-
-with open('board.txt', 'a') as f:
-    f.writelines(i for i in rack1)
-    f.write('\n')
-    f.writelines(i for i in rack2)
-    f.write('\n')
-    f.writelines(i for i in rack3)
-    f.write('\n')
-    f.writelines(i for i in rack4)
-    f.write('\n')
-
-# load racks
-
-with open('board.txt', 'r') as f:
-    for i in range(0, 15, 1):
-        next(f)
-    racklist = []
-    for line in f:
-        racklist.append(line[:-1])
-rack1 = list(racklist[0])
-rack2 = list(racklist[1])
-rack3 = list(racklist[2])
-rack4 = list(racklist[3])
+def loadgame(filename='savegame.sv'):
+    # load from header
+    with open(filename, 'r') as f:
+        header = f.readline()
+        header = header[2:len(header)]  # remove the "comment" prefix added to headers by np.savetxt()
+        header = header.split(':')
+        racks = header[0].split(';')
+        racks = list(map(list, racks))  # each rack was stored as a single string; this makes it into a list
+        scores = header[1].split(';')
+        scores = list(map(int, scores))
+        names = header[2].split(';')
+        turn = int(header[3])
+        board = []
+        for i in f:  # load the board
+            board.append(list(map(int, i.split(','))))
+        board = np.array(board, dtype=int)
+        return board, racks, scores, names, turn
