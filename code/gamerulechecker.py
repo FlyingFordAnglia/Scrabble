@@ -41,3 +41,55 @@ def moveconverter(playerinput, board):  #converting player input to internal lin
 
 letters = moveconverter(playerinput, board)[0]
 positions = moveconverter(playerinput, board)[1]
+
+
+#This function takes the positions of the letters placed on the board, and returns a list of the words made by the placement of the letters. 
+#The format of the returned list is that it is a list of tuples, each a word represented by the positions of the corresponding letters.
+
+
+#This function should be used after the letters are placed on the mainboard, and not before.
+def wordsmade(positions,board):
+    wordsp = []
+    for i in positions:
+        #Horizontally
+        ph = np.array(list(zip([i[0]] * 15, list(range(0, 15, 1)))))[board[i[0], :] < 52].tolist()  #a list of all occupied places on the board
+        r = []
+        for j in ph:
+            r.append(tuple(j))
+        #Trimming the list so that any places after an unoccupied place from the placed letters are removed.
+        if len(r) >1:
+            for j in range(r.index(i), 0, -1):
+                if (r[j][1]-r[j-1][1]) > 1:
+
+                    r=r[j:]
+            for j in range(r.index(i), len(r), 1):
+                try:
+                    if (r[j+1][1] - r[j][1]) > 1:
+                        r=r[:j+1]
+                except:
+                    pass
+            wordsp.append(r)
+            
+        #Vertically
+        pv = np.array(list(zip(list(range(0, 15, 1)), [i[1]] * 15)))[board[:, i[1]] < 52].tolist()
+        s = []
+        for k in pv:
+            s.append(tuple(k))
+        if len(s)>1:
+            for j in range(r.index(i), 0, -1):
+                if (r[j][0]-r[j-1][0]) > 1:
+
+                    r=r[j:]
+            for j in range(r.index(i), len(r), 1):
+                try:
+                    if (r[j+1][0] - r[j][0]) > 1:
+                        r=r[:j+1]
+                except:
+                    pass
+            wordsp.append(s)
+    wordspq=[]
+    for i in wordsp:
+        wordspq.append(tuple(i))
+        
+    return list(set(wordspq))       # Set is used here to remove redundant words.
+
