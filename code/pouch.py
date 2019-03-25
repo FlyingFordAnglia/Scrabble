@@ -25,13 +25,13 @@ class pouch(object):
                 self.letters.remove(i)
             print('The pouch is empty.')
 
-    def exhange(self, player, tiles):
+    def exhange(self, player, tiless):
         if len(self.letters) < 7:  # can exchange only if at least 7 tiles in the rack
             return False  # indicates a failure of exchange
-        new_tiles = np.random.choice(self.letters, len(tiles), replace=False)
+        new_tiles = np.random.choice(self.letters, len(tiless), replace=False)
         for i in new_tiles:
             self.letters.remove(i)
             player.rack.append(i)
-        for i in tiles:
+        for i in tiless:
             player.rack.remove(i)
             return True  # indicates a successful exchange
