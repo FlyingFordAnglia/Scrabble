@@ -1,12 +1,11 @@
 import numpy as np
 
-tiles = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ ')
-freqs = [9, 2, 2, 4, 12, 2, 3, 2, 9, 1, 1, 4, 2, 6, 8, 2, 1, 6, 4, 6, 4, 2, 2, 1, 2, 1, 2]
 
 
 class pouch(object):
-
-    def __init__(self):
+    def __init__(self):        
+        tiles = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ ')
+        freqs = [9, 2, 2, 4, 12, 2, 3, 2, 9, 1, 1, 4, 2, 6, 8, 2, 1, 6, 4, 6, 4, 2, 2, 1, 2, 1, 2]
         self.letters = []
         for i in range(len(tiles)):
             for j in range(freqs[i]):
@@ -33,3 +32,14 @@ class pouch(object):
         for i in tiless:
             player.rack.remove(i)
             return True  # indicates a successful exchange
+        
+    def loadpouch(self,board,racks):
+        boardtopouchdict_nonblanktiles= dict(zip(list(range(0, 26, 1)), string.ascii_uppercase))
+        boardtopouchdict_blanktiles=dict(zip(list(range(26,52,1)), [' ']*26))
+        boardtopouchdict={**boardtopouchdict_blanktiles,**boardtopouchdict_nonblanktiles}
+
+        board_letters=list(map(lambda x: boardtopouchdict[x],board[board<52].tolist()))
+        rack_letters=[item for sublist in racks for item in sublist]
+
+        for i in board_letters+rack_letters:
+            self.letters.remove(i)
