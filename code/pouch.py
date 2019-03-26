@@ -18,12 +18,10 @@ class pouch(object):
             for i in new_tiles:
                 player.rack.append(i)
                 self.letters.remove(i)
-            print('Tiles left in pouch = ', len(self.letters))
         else:
             for i in self.letters:
                 player.rack.append(i)
                 self.letters.remove(i)
-            print('The pouch is empty.')
 
     def exhange(self, player, tiless):
         if len(self.letters) < 7:  # can exchange only if at least 7 tiles in the rack
