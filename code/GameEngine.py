@@ -1,31 +1,40 @@
+
+from pouch import pouch
+from savegame import savegame, loadgame
+from gamerulecheker import mainrules
+
 class GameEngine(object):
 
-    def __init__(self, playernames=('1', '2', '3', '4'), gamestatus='new', filename='savegame.sv'):
+    def __init__(self, playernames=None, gamestatus='new', filename='savegame.sv', validity_mode=True, filename='wordlist/sowpods.txt'):
         if gamestatus == 'new':
-            self.board = numpy.zeros([15, 15], dtype=int) + 52
+            self.filename = filename
+            self.validitymode = validity_mode
+            self.board = numpy.zeros([15, 15], dtype=int) + 52  # empty board
             self.numberofplayers = len(playernames)
-            players = list(map(player, playernames))
+            self.players = list(map(player, playernames))
             self.turn = 0
             self.pouch = pouch()
-            map(lambda x: self.pouch.pick(x), players)
-
+            m = [x.pouch.pick() for x in self.players]  # adding to each player's rack
         else:
+            self.filename = filename
+            self.validitymode = validity_mode
             savedgame = loadgame(filename)
             self.board = savedgame[0]
             self.numberofplayers = len(savedgame[1])
-            players = list(map(player, (savedgame[3], savedgame[2], savedgame[1])))
+            self.players = list(map(player, (savedgame[3], savedgame[2], savedgame[1])))
+
             self.turn = savedgame[4]
             self.pouch = pouch()
             self.pouch.loadpouch(self.board, savedgame[1])
 
     def scrabbleit(self, playerinput):
-        validity = gamerulechecker(playerinput)   #Verifying validity of move
+        validity = mainrules(playerinput, self.board, validity=self.validitymode, filename=self.filename)   # verifying validity of move
         if validity[0]:
-            players[playerinput[3]].score += scorer(validity[1], board) #Updating score of player
-            self.board = move(validity[1][0], validity[1][1], players[playerinput[3]], self.board)    #Updating board
-            self.pouch.pick(players[playerinput[3]])    #Picking new tiles
+            self.players[self.turn].score += scorer(validity[1], board)  # updating score of player
+            self.board = move(validity[1][0], validity[1][1], self.players[self.turn], self.board)  # updating board
+            self.pouch.pick(self.players[self.turn])  # picking new tiles
             self.turn += 1
-            self.turn %= 3    #Updating turn
+            self.turn %= self.numberofplayers  # updating turn
             return True
         else:
             return False
