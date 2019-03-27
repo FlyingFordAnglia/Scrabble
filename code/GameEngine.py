@@ -1,3 +1,4 @@
+
 from pouch import pouch
 from savegame import savegame, loadgame
 from gamerulecheker import mainrules
@@ -21,6 +22,7 @@ class GameEngine(object):
             self.board = savedgame[0]
             self.numberofplayers = len(savedgame[1])
             self.players = list(map(player, (savedgame[3], savedgame[2], savedgame[1])))
+
             self.turn = savedgame[4]
             self.pouch = pouch()
             self.pouch.loadpouch(self.board, savedgame[1])

@@ -33,7 +33,6 @@ def moveconverter(playerinput, board):  # converting player input to internal li
 
     return letters, positions
 
-
 # This function takes the positions of the letters placed on the board, and returns a list of the words made
 # by the placement of the letters. The format of the returned list is that it is a list of tuples, each a word
 # represented by the positions of the corresponding letters.
