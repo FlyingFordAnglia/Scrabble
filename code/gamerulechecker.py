@@ -45,14 +45,14 @@ def wordsmade(letters, positions, mainboard):
         # Horizontally
         ph = np.array(list(zip([i[0]] * 15, list(range(0, 15)))))[board[i[0], :] < 52].tolist()  
         # a list of all occupied places on the board
-        r = list(map(tuple, r))
+        r = list(map(tuple, ph))
         # Trimming the list so that any places after an unoccupied place from the placed letters are removed.
         if len(r) > 1:
-            for j in range(r.index(i), 0, -1):
+            for j in range(r.index(tuple(i)), 0, -1):
                 if (r[j][1] - r[j - 1][1]) > 1:
                     r = r[j:]
                     break
-            for j in range(r.index(i), len(r), 1):
+            for j in range(r.index(tuple(i)), len(r), 1):
                 try:
                     if (r[j + 1][1] - r[j][1]) > 1:
                         r = r[:j + 1]
@@ -64,13 +64,13 @@ def wordsmade(letters, positions, mainboard):
 
         # Vertically
         pv = np.array(list(zip(list(range(0, 15)), [i[1]] * 15)))[board[:, i[1]] < 52].tolist()
-        s = list(map(tuple, s))
+        s = list(map(tuple, pv))
         if len(s) > 1:
-            for j in range(r.index(i), 0, -1):
+            for j in range(r.index(tuple(i)), 0, -1):
                 if (r[j][0] - r[j - 1][0]) > 1:
                     r = r[j:]
                     break
-            for j in range(r.index(i), len(r), 1):
+            for j in range(r.index(tuple(i)), len(r), 1):
                 try:
                     if (r[j + 1][0] - r[j][0]) > 1:
                         r = r[:j + 1]
