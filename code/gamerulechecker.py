@@ -98,7 +98,7 @@ def validword(words, filename='wordlist/sowpods.txt'):
     return True
 
 
-def overlaptester(playerinput):
+def overlaptester(playerinput,board):
     l_1 = dict(zip(list(range(0, 26, 1)), string.ascii_uppercase))
     l_2 = dict(zip(list(range(26, 52, 1)), string.ascii_lowercase))
     numberletterkey = {**l_1, **l_2}
@@ -124,7 +124,7 @@ def overlaptester(playerinput):
 def mainrules(playerinput, board, validity=True, filename='wordlist/sowpods.txt'):
     if not boundarytester(playerinput):
         return False, False, False
-    if not overlaptester(playerinput):
+    if not overlaptester(playerinput,board):
         return False, False, False
     move = moveconverter(playerinput, board)
     words = wordsmade(move[0], move[1], board)
