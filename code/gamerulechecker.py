@@ -21,13 +21,13 @@ def moveconverter(playerinput, board):  # converting player input to internal li
         # p is the list of positions of the tiles in word made
         p = [(x, playerinput[1][1]) for x in range(playerinput[1][0], playerinput[1][0] + len(word))]
         # bmask is a boolean mask to find out which positions are not occupied on the board
-        bmask = board[p[0][0]:p[-1][0], p[0][1]] == 52
+        bmask = board[p[0][0]:p[-1][0]+1, p[0][1]] == 52
         letters = np.array(word)[bmask].tolist()
         positions = np.array(p)[bmask].tolist()
 
     elif playerinput[2] == 'h':
         p = [(playerinput[1][0], x) for x in range(playerinput[1][1], playerinput[1][1] + len(word))]
-        bmask = board[p[0][0], p[0][1]:p[-1][1]] == 52
+        bmask = board[p[0][0], p[0][1]:p[-1][1]+1] == 52
         letters = np.array(word)[bmask].tolist()
         positions = np.array(p)[bmask].tolist()
 
@@ -106,16 +106,16 @@ def overlaptester(playerinput,board):
     if playerinput[2] == 'v':
         p = [(x, playerinput[1][1]) for x in range(playerinput[1][0], playerinput[1][0] + len(word))]
         # bmask is a boolean mask to find out which positions are occupied on the board
-        bmask = board[p[0][0]:p[-1][0], p[0][1]] != 52
+        bmask = board[p[0][0]:p[-1][0]+1, p[0][1]] != 52
         overlapletters = ''.join(np.array(word)[bmask].tolist()).lower()
-        existingletters = ''.join(list(map(lambda x: numberletterkey[x], board[p[0][0]:p[-1][0], p[0][1]][bmask]))).lower()
+        existingletters = ''.join(list(map(lambda x: numberletterkey[x], board[p[0][0]:p[-1][0], p[0][1]+1][bmask]))).lower()
         if overlapletters != existingletters:
             return False
     elif playerinput[2] == 'h':
         p = [(playerinput[1][0], x) for x in range(playerinput[1][1], playerinput[1][1] + len(word))]
-        bmask = board[p[0][0], p[0][1]:p[-1][1]] != 52
+        bmask = board[p[0][0], p[0][1]:p[-1][1]+1] != 52
         overlapletters = ''.join(np.array(word)[bmask].tolist()).lower()
-        existingletters = ''.join(list(map(lambda x: numberletterkey[x], board[p[0][0], p[0][1]:p[-1][1]][bmask]))).lower()
+        existingletters = ''.join(list(map(lambda x: numberletterkey[x], board[p[0][0], p[0][1]:p[-1][1]+1][bmask]))).lower()
         if overlapletters != existingletters:
             return False
     return True
