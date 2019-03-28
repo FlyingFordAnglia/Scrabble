@@ -1,4 +1,4 @@
-
+from player import player
 from pouch import pouch
 from savegame import savegame, loadgame
 from gamerulecheker import mainrules
@@ -38,3 +38,6 @@ class GameEngine(object):
             return True
         else:
             return False
+    
+    def save(self, filename='savegame.sv'):
+        savegame(self.board, [i.rack for i in self.players], self.players, self.turn, filename)

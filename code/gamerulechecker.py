@@ -1,5 +1,5 @@
-# player input is: Word made, starting tile position of the word made, horizontal or vertical, which player
-# example: playerinput = ['STRING', (0, 1), 'v', player]
+# player input is: Word made, starting tile position of the word made, horizontal or vertical
+# example: playerinput = ['STRING', (0, 1), 'v']
 import numpy as np
 
 
