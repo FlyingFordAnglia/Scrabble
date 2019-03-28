@@ -1,20 +1,21 @@
 from player import player
 from pouch import pouch
 from savegame import savegame, loadgame
-from gamerulecheker import mainrules
-
+from gamerulechecker import mainrules
+import numpy as np
 class GameEngine(object):
 
-    def __init__(self, playernames=None, gamestatus='new', filename='savegame.sv', validity_mode=True, filename='wordlist/sowpods.txt'):
+    def __init__(self, playernames=None, gamestatus='new', validity_mode=True, filename='wordlist/sowpods.txt'):
         if gamestatus == 'new':
             self.filename = filename
             self.validitymode = validity_mode
-            self.board = numpy.zeros([15, 15], dtype=int) + 52  # empty board
+            self.board = np.zeros([15, 15], dtype=int) + 52  # empty board
             self.numberofplayers = len(playernames)
             self.players = list(map(player, playernames))
             self.turn = 0
             self.pouch = pouch()
-            m = [x.pouch.pick() for x in self.players]  # adding to each player's rack
+            for x in self.players:
+                self.pouch.pick(x)
         else:
             self.filename = filename
             self.validitymode = validity_mode
