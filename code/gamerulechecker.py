@@ -140,9 +140,7 @@ def mainrules(playerinput, board, validity=True, filename='wordlist/sowpods.txt'
     if not overlaptester(playerinput,board):
         return False, False, False
     move = moveconverter(playerinput, board)
-    print(move)
     words = wordsmade(move[0], move[1], board)
-    print(words)
     internal_board = board.copy()
     for i in range(len(move[0])):
         internal_board[move[1][i][0], move[1][i][1]] = letternumberkey[move[0][i]]
