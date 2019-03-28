@@ -1,7 +1,7 @@
 # player input is: Word made, starting tile position of the word made, horizontal or vertical
 # example: playerinput = ['STRING', (0, 1), 'v']
 import numpy as np
-
+import string
 
 def boundarytester(playerinput):  # to check whether the player is placing the tiles in the confines of the board
     if playerinput[1][0] > 14 or playerinput[1][0] < 0 or playerinput[1][1] > 14 or playerinput[1][1] < 0:
