@@ -37,13 +37,17 @@ def moveconverter(playerinput, board):  # converting player input to internal li
 # by the placement of the letters. The format of the returned list is that it is a list of tuples, each a word
 # represented by the positions of the corresponding letters.
 def wordsmade(letters, positions, mainboard):
+    l1 = dict(zip(string.ascii_uppercase, list(range(0, 26, 1))))
+    l2 = dict(zip(string.ascii_lowercase, list(range(26, 52, 1))))
+    letternumberkey = {**l1, **l2}
+    letternumberkey[' '] = 52
     board = mainboard.copy()
     for i in range(len(letters)):
-        board[positions[i][0], positions[i][1]] = letters[i]
+        board[positions[i][0], positions[i][1]] = letternumberkey[letters[i]]
     wordsp = []
     for i in positions:
         # Horizontally
-        ph = np.array(list(zip([i[0]] * 15, list(range(0, 15)))))[board[i[0], :] < 52].tolist()  
+        ph = np.array(list(zip([i[0]] * 15, list(range(0, 15)))))[board[i[0], :] < 52].tolist()
         # a list of all occupied places on the board
         r = list(map(tuple, ph))
         # Trimming the list so that any places after an unoccupied place from the placed letters are removed.
@@ -102,19 +106,20 @@ def overlaptester(playerinput,board):
     l_1 = dict(zip(list(range(0, 26, 1)), string.ascii_uppercase))
     l_2 = dict(zip(list(range(26, 52, 1)), string.ascii_lowercase))
     numberletterkey = {**l_1, **l_2}
+    numberletterkey[52] = ' '
     word = playerinput[0]
     if playerinput[2] == 'v':
         p = [(x, playerinput[1][1]) for x in range(playerinput[1][0], playerinput[1][0] + len(word))]
         # bmask is a boolean mask to find out which positions are occupied on the board
         bmask = board[p[0][0]:p[-1][0]+1, p[0][1]] != 52
-        overlapletters = ''.join(np.array(word)[bmask].tolist()).lower()
+        overlapletters = ''.join(np.array(list(word))[bmask].tolist()).lower()
         existingletters = ''.join(list(map(lambda x: numberletterkey[x], board[p[0][0]:p[-1][0]+1, p[0][1]][bmask]))).lower()
         if overlapletters != existingletters:
             return False
     elif playerinput[2] == 'h':
         p = [(playerinput[1][0], x) for x in range(playerinput[1][1], playerinput[1][1] + len(word))]
         bmask = board[p[0][0], p[0][1]:p[-1][1]+1] != 52
-        overlapletters = ''.join(np.array(word)[bmask].tolist()).lower()
+        overlapletters = ''.join(np.array(list(word))[bmask].tolist()).lower()
         existingletters = ''.join(list(map(lambda x: numberletterkey[x], board[p[0][0], p[0][1]:p[-1][1]+1][bmask]))).lower()
         if overlapletters != existingletters:
             return False
@@ -122,13 +127,32 @@ def overlaptester(playerinput,board):
 
 
 def mainrules(playerinput, board, validity=True, filename='wordlist/sowpods.txt'):
+    l_1 = dict(zip(list(range(0, 26, 1)), string.ascii_uppercase))
+    l_2 = dict(zip(list(range(26, 52, 1)), string.ascii_lowercase))
+    numberletterkey = {**l_1, **l_2}
+    numberletterkey[52] = ' '
+    l1 = dict(zip(string.ascii_uppercase, list(range(0, 26, 1))))
+    l2 = dict(zip(string.ascii_lowercase, list(range(26, 52, 1))))
+    letternumberkey = {**l1, **l2}
+    letternumberkey[' '] = 52
     if not boundarytester(playerinput):
         return False, False, False
     if not overlaptester(playerinput,board):
         return False, False, False
     move = moveconverter(playerinput, board)
+    print(move)
     words = wordsmade(move[0], move[1], board)
+    print(words)
+    internal_board = board.copy()
+    for i in range(len(move[0])):
+        internal_board[move[1][i][0], move[1][i][1]] = letternumberkey[move[0][i]]
+    actual_words = []
+    for i in words:
+        w = []
+        for j in i:
+            w.append(numberletterkey[internal_board[j[0], j[1]]])
+        actual_words.append(''.join(w).lower())
     if validity:
-        if not validword(words, filename):
+        if not validword(actual_words, filename):
             return False, False, False
     return True, move, words
