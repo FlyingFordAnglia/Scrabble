@@ -108,7 +108,7 @@ def overlaptester(playerinput,board):
         # bmask is a boolean mask to find out which positions are occupied on the board
         bmask = board[p[0][0]:p[-1][0]+1, p[0][1]] != 52
         overlapletters = ''.join(np.array(word)[bmask].tolist()).lower()
-        existingletters = ''.join(list(map(lambda x: numberletterkey[x], board[p[0][0]:p[-1][0], p[0][1]+1][bmask]))).lower()
+        existingletters = ''.join(list(map(lambda x: numberletterkey[x], board[p[0][0]:p[-1][0]+1, p[0][1]][bmask]))).lower()
         if overlapletters != existingletters:
             return False
     elif playerinput[2] == 'h':
