@@ -26,7 +26,7 @@ else:
                 printer(currentgame.board)
                 for i in currentgame.players:
                     print(i.name, ': Your score is ', i.score)
-                print(playernames[currentgame.turn], ', it is your turn. Here are the letters in you rack.')
+                print(playernames[currentgame.turn], ', it is your turn. Here are the letters in your rack.')
                 print(currentgame.players[currentgame.turn].rack)
                 print('Type the word you want to place on the board. This should contain all the new tiles you are adding.')
                 print('Enter all non-blank tiles as capitals \
