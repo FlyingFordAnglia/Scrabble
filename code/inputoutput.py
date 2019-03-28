@@ -1,5 +1,6 @@
 # input output
-
+from GameEngine import GameEngine
+from printer import printer
 print('Welcome to the game of SCRABBLE!')
 print('Would you like to play?')
 if input('yes or no? ').lower() == 'no':
