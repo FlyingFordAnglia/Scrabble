@@ -47,7 +47,7 @@ else:
                         exit()
                     else:
                         reply = 'C'
-                        if scrabbleit[1]= True
+                        if scrabbleit[1]:
                             reply='E'
         if reply=='E':
             print('The game has ended. Here are your scores.')
