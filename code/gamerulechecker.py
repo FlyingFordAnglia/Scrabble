@@ -41,8 +41,7 @@ def island_words_tester(positions, board):
         if i[0] == 7 and i[1] == 7:
             test = True
         else:
-            adjacent_positions = [(positions[0] - 1, positions[1]), (positions[0] + 1, positions[1]),
-                                  (positions[0], positions[1] - 1), (positions[0], positions[1] + 1)]
+            adjacent_positions = [(i[0] - 1, i[1]), (i[0] + 1, i[1]),(i[0], i[1] - 1), (i[0], i[1] + 1)]
             for j in adjacent_positions:
                 if board[j[0], j[1]] < 52:
                     test = True
