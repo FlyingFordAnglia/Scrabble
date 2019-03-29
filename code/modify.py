@@ -1,4 +1,4 @@
-# board format: The board is an array of 15*15 shape, with the elements being numbers, 
+# board format: The board is an array of 15x15 shape, with the elements being numbers, 
 # translated by the dictionary letternumberkey into strings whenever required.
 import string
 
@@ -18,11 +18,10 @@ numberletterkey[52] = ' '
 
 def move(letters, positions, player, mainboard):
     board = mainboard.copy()
-    validletters=True
     for i in range(len(letters)):
-        if letters[i] in player.rack:
-            board[positions[i][0], positions[i][1]] = letternumberkey[letters[i]]
+        board[positions[i][0], positions[i][1]] = letternumberkey[letters[i]]
+        if letters[i] == letters[i].upper():
             player.rack.remove(letters[i])
         else:
-            validletters=False
-    return validletters,board
+            player.rack.remove(' ')
+    return board

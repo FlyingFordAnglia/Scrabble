@@ -1,0 +1,30 @@
+The goal of Scrabble is to score as many points as possible by placing letter tiles to create words onto the game board. At the end of the game, when one player has used all of their tiles and there are no more tiles left to draw, the game ends.
+Players should agree on a dictionary or word source to be used, for the purpose of adjudicating challenges.
+The game is set up so that each player possesses one rack. The 100 letter tiles are placed into an opaque bag (or face-down), hidden from view.
+Players return tiles to the bag, and shuffle. Each player draws seven tiles, and places them on his or her rack, hidden from other players.
+The first word formed must consist of at least two letters that form a word reading left-to-right or top-to-bottom, and touch the center square. On every turn, the player has the option to:
+    1) Pass their turn, scoring nothing (Will be added in future versions).
+    2) Exchange 1-7 tiles, scoring nothing. The proper way to exchange tiles is to place the exchanged tiles face down, draw replacement tiles, and put the exchanged tiles into the bag. You can only exchange if there are at least 7 tiles in the bag.
+    3) Make a play by adding at least one new tile to the board, record the score for the play, and add to their cumulative score.
+After making a play, the player announces the score for that play, and draws replacement tiles until they have seven tiles. Every play thereafter must connect to at least one tile already on the board. On subsequent plays, players can
+    1) Extend a previously played word; e.g. if PARK is played, (PARK)S, (PARK)ING, RE(PARK) and RE(PARK)ING are all acceptable plays.
+    2) "Hook" a word by adding one letter to a previously played word, and playing perpendicular (e.g. if PARK is played, playing ZEALOTS/S(PARK) is valid).
+    3) Playing parallel to a previously-played word. For example, playing ILEA under PARK, forming PI, AL, RE, and KA.
+Some rules about subsequent plays:
+    1) Diagonal plays or words that read right-to-left or bottom-to-top (e.g. SEIVARG*) are not acceptable.
+    2) All letters played in one turn must lie on a line and form a continuous word (usually called the "main word"). At least one tile played must be adjacent to a tile previously on the board.
+Plays that violate the above conditions are unacceptable, and can be challenged off in tournament play, regardless of validity.
+There are two blank tiles, which may be used as any letter. Blank tiles score 0 points, regardless of the letter it designates. When a blank is played, the letter that the blank represents must be indicated, and cannot change in subsequent turns. It can however be swapped.
+All words in the agreed-upon dictionary, including inflections, are acceptable. Proper nouns are not acceptable, unless they have separate meanings (such as CHINA, JACK, or BOSTON). Most acronyms or abbreviations are not allowed, unless they appear as separate entries. Archaic spellings are generally not allowed. Foreign words which have been incorporated into the language are valid. Vulgar and offensive words are acceptable in tournament and most club play (however, the National School Scrabble Championship uses the OSPD5, which expurgates offensive words).
+(Will be added in future versions)If player A forms a word that the opponent believes is invalid (not listed in the agreed-upon dictionary), the opponent can challenge the play. If any of the challenged word(s) does not appear in the dictionary, player A removes their play from the board and loses their turn. The opponent can only challenge a play before player A draws replenishment tiles. 
+Game ends when there are no more tiles left to draw, and one player has used up their tiles (known as playing out).
+If a player plays out, the sum of the values of their opponents' tiles is added to the player's score, while each of the opponents' scores is reduced by the sum left on their own rack.
+Each letter tile has a number next to it that indicates how many points it is worth. Common letters, such as vowels, are worth 1 point, while rare letters such as "Q", "X", and "Z" are worth 8-10 points. Blank tiles are worth zero points. The score of a play is equal to the sum of the scores of all new words formed.
+    1) Double Letter Score and Triple Letter Score (DLS, TLS) - a letter on this space is doubled or tripled in its point value.
+    2) Double Word Score and Triple Word Score (DWS, TWS) - if any letter touches this space, the entire word is doubled in point value. If your word includes both a letter bonus and a word bonus, the letter bonus is applied first, in accordance with order of operations.
+Note that the center square is a DWS, so the first play of the game receives a double word score.
+The premium letter squares are only applied on the first turn that they are used. On subsequent plays, the premium letter squares are nulled.
+If a pre-existing word is added onto with a tile that lands on a double word tile, the original word is not doubled.
+A play that covers two DWS is doubled then re-doubled (i.e. the score for the word is 4 times its face value) and is sometimes referred to as a "double-double." Similarly, a play covering two TWS is tripled then re-tripled ("triple-triple.").
+If a player uses all seven of their tiles on one play, they receives an extra 50 points, in addition to the score for the word. Such a play is commonly referred to as a bingo or a bonus.
+At the end of the game when nobody can make a move or someone goes out of tiles, each player subtracts the amount of points that remain unused on their rack from their total score. If someone goes out of tiles, then the total of points on all other players' racks is added to their score as well. For this reason it's usually advantageous to be the first to dump all your tiles. 
