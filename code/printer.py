@@ -58,11 +58,12 @@ def printer(board):
             np.logical_and(board == ' ', special_words != ' ')]  # Only the places where there are no tiles are replaced
 
         # Actual printing
-        print("     |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10 |  11 |  12 |  13 |  14 |  15 |")
+        print("     |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |  10 |  11 |  12 |  13 |  14 |")
         print("  ----------------------------------------------------------------------------------------------")
         alph = list('abcdefghijklmno')
+        padding = [' ' for x in range(10)] + ['' for x in range(5)]
         for j in range(15):
-            print("  " + str(j) + "  |", end='')
+            print("  " + str(j) + padding[j] + " |", end='')
             for i in range(15):
                 print(coloringdict[board2[j][i]](board2[j][i]) + "|", end='')
             print("")
