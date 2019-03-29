@@ -1,4 +1,4 @@
-#CLI Scrabble 
+# CLI Scrabble 
 #### License: MIT
 #### Version 1.0
 
