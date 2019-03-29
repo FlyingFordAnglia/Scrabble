@@ -26,7 +26,7 @@ else:
                 printer(currentgame.board)
                 for i in currentgame.players:
                     print(i.name, ': Your score is ', i.score)
-                print(playernames[currentgame.turn], ', it is your turn. Here are the letters in your rack.')
+                print(playernames[currentgame.turn], ', it is your turn. Here are the letters in you rack.')
                 print(currentgame.players[currentgame.turn].rack)
                 print('Type the word you want to place on the board. This should contain all the new tiles you are adding.')
                 print('Enter all non-blank tiles as capitals \
@@ -37,7 +37,8 @@ else:
                 playerinput.append([int(input('Enter the row number here: ')), int(input('Enter the column number here: '))])
                 print('Is your word vertically placed or horizontally placed?')
                 playerinput.append(str(input('Enter v or h here: ')))
-                if currentgame.scrabbleit(playerinput):
+                scrabbleit=currentgame.scrabbleit(playerinput)
+                if scrabbleit[0]:
                     cont = True
                     reply = input('Enter Q to quit without saving, S to save the game and anything else to continue: ')
                     if reply == 'S':
@@ -46,5 +47,14 @@ else:
                         exit()
                     else:
                         reply = 'C'
+                        if scrabbleit[1]= True
+                            reply='E'
+        if reply=='E':
+            print('The game has ended. Here are your scores.')
+            for i in currentgame.players:
+                print(i.name, ': Your score is ', i.score)
+                finalscores=list(x.score for x in currentgame.players)
+                winner=currentgame.players[finalscores.index(max(finalscores))].name
+                print('The winner is: ',winner,'!!!!!! Congratulations!')
                 else:
                     print('The word/indices you entered was invalid. Please enter again.')
