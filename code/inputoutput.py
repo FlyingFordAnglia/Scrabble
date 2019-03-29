@@ -1,6 +1,7 @@
 # input output
 from GameEngine import GameEngine
 from printer import printer
+
 print('Welcome to the game of SCRABBLE!')
 print('Would you like to play?')
 if input('yes or no? ').lower() == 'no':
@@ -28,34 +29,41 @@ else:
                     print(i.name, ': Your score is ', i.score)
                 print(playernames[currentgame.turn], ', it is your turn. Here are the letters in you rack.')
                 print(currentgame.players[currentgame.turn].rack)
-                print('Type the word you want to place on the board. This should contain all the new tiles you are adding.')
-                print('Enter all non-blank tiles as capitals \
-                and any blank tiles using the small letter of the letter you want to use the blank tile as.')
+                print(
+                    'Type the word you want to place on the board.\
+This should contain all the new tiles you are adding.')
+                print(
+                    'Enter all non-blank tiles as capitals \
+and any blank tiles using the small letter of the letter you want to use the blank tile as.')
                 playerinput = []
                 playerinput.append(str(input('Word to be played: ')))
                 print('Where is the first letter of the word you made on the board?')
-                playerinput.append([int(input('Enter the row number here: ')), int(input('Enter the column number here: '))])
+                playerinput.append(
+                    [int(input('Enter the row number here: ')), int(input('Enter the column number here: '))])
                 print('Is your word vertically placed or horizontally placed?')
-                playerinput.append(str(input('Enter v or h here: ')))
-                scrabbleit=currentgame.scrabbleit(playerinput)
+                playerinput.append(str(input('Enter v or h here: ')).lower())
+                scrabbleit = currentgame.scrabbleit(playerinput)
                 if scrabbleit[0]:
                     cont = True
                     reply = input('Enter Q to quit without saving, S to save the game and anything else to continue: ')
                     if reply == 'S':
-                        currentgame.save(filename=input('Enter the name of the saved file (press enter to use the default): '))
+                        currentgame.save(
+                            filename=input('Enter the name of the saved file (press enter to use the default): '))
                     elif reply == 'Q':
                         exit()
                     else:
                         reply = 'C'
                         if scrabbleit[1]:
-                            reply='E'
+                            reply = 'E'
                 else:
+                    if scrabbleit[2] =='no':
+                        print('The letters you entered were not in your rack.')
                     print('The word/indices you entered was invalid. Please enter again.')
 
-        if reply=='E':
+        if reply == 'E':
             print('The game has ended. Here are your scores.')
             for i in currentgame.players:
                 print(i.name, ': Your score is ', i.score)
-                finalscores=list(x.score for x in currentgame.players)
-                winner=currentgame.players[finalscores.index(max(finalscores))].name
-                print('The winner is: ',winner,'!!!!!! Congratulations!')
+                finalscores = list(x.score for x in currentgame.players)
+                winner = currentgame.players[finalscores.index(max(finalscores))].name
+                print('The winner is: ', winner, '!!!!!! Congratulations!')
