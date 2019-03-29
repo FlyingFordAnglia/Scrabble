@@ -2,6 +2,8 @@
 #### License: MIT
 #### Version 1.0
 
+![screenshot of an active game](https://github.com/Stochastic13/Scrabble/blob/master/screenshot.png)
+
 **CLI SCRABBLE** is a python program to play the game of SCRABBLE in a Command-Line-Interface format.
 This program was made as an exercise for fun and some learning, and also is my first GitHub repository! 
 
