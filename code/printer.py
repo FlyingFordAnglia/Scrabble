@@ -62,7 +62,7 @@ def printer(board):
         print("  ----------------------------------------------------------------------------------------------")
         alph = list('abcdefghijklmno')
         for j in range(15):
-            print("  " + alph[j] + "  |", end='')
+            print("  " + str(j) + "  |", end='')
             for i in range(15):
                 print(coloringdict[board2[j][i]](board2[j][i]) + "|", end='')
             print("")
