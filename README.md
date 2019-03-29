@@ -5,6 +5,11 @@
 CLI Scrabble is a python program to play the game of SCRABBLE in a Command-Line-Interface format. 
 This program was made as an exercise for fun and some learning. 
 
+## Prerequisites
+
+-Python
+
+
 ## Installation
 
 #### Windows:
