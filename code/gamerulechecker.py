@@ -3,6 +3,7 @@
 import numpy as np
 import string
 
+
 def boundarytester(playerinput):  # to check whether the player is placing the tiles in the confines of the board
     if playerinput[1][0] > 14 or playerinput[1][0] < 0 or playerinput[1][1] > 14 or playerinput[1][1] < 0:
         return False
@@ -21,17 +22,32 @@ def moveconverter(playerinput, board):  # converting player input to internal li
         # p is the list of positions of the tiles in word made
         p = [(x, playerinput[1][1]) for x in range(playerinput[1][0], playerinput[1][0] + len(word))]
         # bmask is a boolean mask to find out which positions are not occupied on the board
-        bmask = board[p[0][0]:p[-1][0]+1, p[0][1]] == 52
+        bmask = board[p[0][0]:p[-1][0] + 1, p[0][1]] == 52
         letters = np.array(word)[bmask].tolist()
         positions = np.array(p)[bmask].tolist()
 
     elif playerinput[2] == 'h':
         p = [(playerinput[1][0], x) for x in range(playerinput[1][1], playerinput[1][1] + len(word))]
-        bmask = board[p[0][0], p[0][1]:p[-1][1]+1] == 52
+        bmask = board[p[0][0], p[0][1]:p[-1][1] + 1] == 52
         letters = np.array(word)[bmask].tolist()
         positions = np.array(p)[bmask].tolist()
 
     return letters, positions
+
+
+def island_words_tester(positions, board):
+    test = False
+    for i in positions:
+        if i[0] == 7 and i[1] == 7:
+            test = True
+        else:
+            adjacent_positions = [(positions[0] - 1, positions[1]), (positions[0] + 1, positions[1]),
+                                  (positions[0], positions[1] - 1), (positions[0], positions[1] + 1)]
+            for j in adjacent_positions:
+                if board[j[0], j[1]] < 52:
+                    test = True
+    return test
+
 
 # This function takes the positions of the letters placed on the board, and returns a list of the words made
 # by the placement of the letters. The format of the returned list is that it is a list of tuples, each a word
@@ -102,7 +118,7 @@ def validword(words, filename='wordlist/sowpods.txt'):
     return True
 
 
-def overlaptester(playerinput,board):
+def overlaptester(playerinput, board):
     l_1 = dict(zip(list(range(0, 26, 1)), string.ascii_uppercase))
     l_2 = dict(zip(list(range(26, 52, 1)), string.ascii_lowercase))
     numberletterkey = {**l_1, **l_2}
@@ -111,16 +127,18 @@ def overlaptester(playerinput,board):
     if playerinput[2] == 'v':
         p = [(x, playerinput[1][1]) for x in range(playerinput[1][0], playerinput[1][0] + len(word))]
         # bmask is a boolean mask to find out which positions are occupied on the board
-        bmask = board[p[0][0]:p[-1][0]+1, p[0][1]] != 52
+        bmask = board[p[0][0]:p[-1][0] + 1, p[0][1]] != 52
         overlapletters = ''.join(np.array(list(word))[bmask].tolist()).lower()
-        existingletters = ''.join(list(map(lambda x: numberletterkey[x], board[p[0][0]:p[-1][0]+1, p[0][1]][bmask]))).lower()
+        existingletters = ''.join(
+            list(map(lambda x: numberletterkey[x], board[p[0][0]:p[-1][0] + 1, p[0][1]][bmask]))).lower()
         if overlapletters != existingletters:
             return False
     elif playerinput[2] == 'h':
         p = [(playerinput[1][0], x) for x in range(playerinput[1][1], playerinput[1][1] + len(word))]
-        bmask = board[p[0][0], p[0][1]:p[-1][1]+1] != 52
+        bmask = board[p[0][0], p[0][1]:p[-1][1] + 1] != 52
         overlapletters = ''.join(np.array(list(word))[bmask].tolist()).lower()
-        existingletters = ''.join(list(map(lambda x: numberletterkey[x], board[p[0][0], p[0][1]:p[-1][1]+1][bmask]))).lower()
+        existingletters = ''.join(
+            list(map(lambda x: numberletterkey[x], board[p[0][0], p[0][1]:p[-1][1] + 1][bmask]))).lower()
         if overlapletters != existingletters:
             return False
     return True
@@ -137,10 +155,12 @@ def mainrules(playerinput, board, validity=True, filename='wordlist/sowpods.txt'
     letternumberkey[' '] = 52
     if not boundarytester(playerinput):
         return False, False, False
-    if not overlaptester(playerinput,board):
+    if not overlaptester(playerinput, board):
         return False, False, False
     move = moveconverter(playerinput, board)
     words = wordsmade(move[0], move[1], board)
+    if not island_words_tester(move[1], board):
+        return False, False, False
     internal_board = board.copy()
     for i in range(len(move[0])):
         internal_board[move[1][i][0], move[1][i][1]] = letternumberkey[move[0][i]]
