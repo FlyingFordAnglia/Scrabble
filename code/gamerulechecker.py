@@ -70,14 +70,14 @@ def wordsmade(letters, positions, mainboard):
         pv = np.array(list(zip(list(range(0, 15)), [i[1]] * 15)))[board[:, i[1]] < 52].tolist()
         s = list(map(tuple, pv))
         if len(s) > 1:
-            for j in range(r.index(tuple(i)), 0, -1):
-                if (r[j][0] - r[j - 1][0]) > 1:
-                    r = r[j:]
+            for j in range(s.index(tuple(i)), 0, -1):
+                if (s[j][0] - s[j - 1][0]) > 1:
+                    s = s[j:]
                     break
-            for j in range(r.index(tuple(i)), len(r), 1):
+            for j in range(s.index(tuple(i)), len(s), 1):
                 try:
-                    if (r[j + 1][0] - r[j][0]) > 1:
-                        r = r[:j + 1]
+                    if (s[j + 1][0] - s[j][0]) > 1:
+                        s = s[:j + 1]
                         break
                 except IndexError:
                     pass
