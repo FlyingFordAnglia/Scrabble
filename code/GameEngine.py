@@ -3,7 +3,7 @@ from pouch import pouch
 from savegame import savegame, loadgame
 from gamerulechecker import mainrules
 import numpy as np
-from scorer import scorer
+from scorer import scorer, endscore
 from modify import move
 
 
@@ -35,12 +35,19 @@ class GameEngine(object):
     def scrabbleit(self, playerinput):
         validity = mainrules(playerinput, self.board, validity=self.validitymode, filename=self.filename)   # verifying validity of move
         if validity[0]:
+            gameended=False
             self.players[self.turn].score += scorer(validity[1], validity[2], self.board)  # updating score of player
             self.board = move(validity[1][0], validity[1][1], self.players[self.turn], self.board)  # updating board
-            self.pouch.pick(self.players[self.turn])  # picking new tiles
+            if len(self.pouch.letters)>0:
+                self.pouch.pick(self.players[self.turn])  # picking new tiles
+            else:
+                if len(self.players[self.turn].rack)==0:
+                    endscore(self.players,self.turn)
+                    gameended=True
+
             self.turn += 1
             self.turn %= self.numberofplayers  # updating turn
-            return True
+            return True,gameended
         else:
             return False
     
