@@ -49,7 +49,7 @@ class GameEngine(object):
             self.turn %= self.numberofplayers  # updating turn
             return True,gameended
         else:
-            return False
+            return False, False
     
     def save(self, filename='savegame.sv'):
         savegame(self.board, [i.rack for i in self.players], self.players, self.turn, filename)
