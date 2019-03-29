@@ -36,8 +36,16 @@ class GameEngine(object):
         validity = mainrules(playerinput, self.board, validity=self.validitymode, filename=self.filename)   # verifying validity of move
         if validity[0]:
             gameended=False
+            lettersinrack=True
+            play=True
             self.players[self.turn].score += scorer(validity[1], validity[2], self.board)  # updating score of player
-            self.board = move(validity[1][0], validity[1][1], self.players[self.turn], self.board)  # updating board
+
+            moveboard = move(validity[1][0], validity[1][1], self.players[self.turn], self.board)  # updating board
+            if moveboard[0]:
+                self.board=moveboard[1]
+            if moveboard[0] is False:
+                lettersinrack='no'
+                play=False
             if len(self.pouch.letters)>0:
                 self.pouch.pick(self.players[self.turn])  # picking new tiles
             else:
@@ -47,9 +55,9 @@ class GameEngine(object):
 
             self.turn += 1
             self.turn %= self.numberofplayers  # updating turn
-            return True,gameended
+            return play,gameended,lettersinrack
         else:
-            return False, False
+            return False,False,False
     
     def save(self, filename='savegame.sv'):
         savegame(self.board, [i.rack for i in self.players], self.players, self.turn, filename)
