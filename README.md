@@ -31,4 +31,5 @@ The current version of CLI scrabble is a turn based game with no time limit.
 ## Contributors
 
 -[FlyingFordAnglia](https://github.com/FlyingFordAnglia)
+
 -[Stochastic13](https://github.com/Stochastic13)
