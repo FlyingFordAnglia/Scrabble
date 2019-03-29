@@ -49,6 +49,9 @@ else:
                         reply = 'C'
                         if scrabbleit[1]:
                             reply='E'
+                else:
+                    print('The word/indices you entered was invalid. Please enter again.')
+
         if reply=='E':
             print('The game has ended. Here are your scores.')
             for i in currentgame.players:
@@ -56,5 +59,3 @@ else:
                 finalscores=list(x.score for x in currentgame.players)
                 winner=currentgame.players[finalscores.index(max(finalscores))].name
                 print('The winner is: ',winner,'!!!!!! Congratulations!')
-                else:
-                    print('The word/indices you entered was invalid. Please enter again.')
