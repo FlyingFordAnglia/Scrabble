@@ -42,3 +42,12 @@ def scorer(move, wordsposition, board):
                 tilescores = tilescores * 2
         score += tilescores
     return score
+
+def endscore(players,turn):
+    remaining_players=players.pop(turn)
+    for i in remaining_players:
+        last_score=0
+        for j in i.rack:
+            last_score+=letters_score[j]
+            i.score=i.score-letters_score[j]
+        players[turn].score+=last_score
