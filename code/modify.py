@@ -18,7 +18,11 @@ numberletterkey[52] = ' '
 
 def move(letters, positions, player, mainboard):
     board = mainboard.copy()
+    validletters=True
     for i in range(len(letters)):
-        board[positions[i][0], positions[i][1]] = letternumberkey[letters[i]]
-        player.rack.remove(letters[i])
-    return board
+        if letters[i] in player.rack:
+            board[positions[i][0], positions[i][1]] = letternumberkey[letters[i]]
+            player.rack.remove(letters[i])
+        else:
+            validletters=False
+    return validletters,board
