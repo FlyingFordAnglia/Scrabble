@@ -8,10 +8,10 @@ def boundarytester(playerinput):  # to check whether the player is placing the t
     if playerinput[1][0] > 14 or playerinput[1][0] < 0 or playerinput[1][1] > 14 or playerinput[1][1] < 0:
         return False
     if playerinput[2] == 'h':
-        if (playerinput[1][1] + len(list(playerinput[0]))) > 14:
+        if (playerinput[1][1] + len(list(playerinput[0])) - 1) > 14:
             return False
     if playerinput[2] == 'v':
-        if (playerinput[1][0] + len(list(playerinput[0]))) > 14:
+        if (playerinput[1][0] + len(list(playerinput[0])) - 1) > 14:
             return False
     return True
 
