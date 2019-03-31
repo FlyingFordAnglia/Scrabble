@@ -42,62 +42,85 @@ else:
                 currentgame = GameEngine(playernames, 'new', filename=filename)
         else:
             currentgame = GameEngine(playernames, 'new', False)
-        reply = 'C'
-        while reply == 'C':
-            cont = False  # A bool allowing to decide for continuing based on the validity of the enetered move
-            while not cont:
-                printer(currentgame.board)
-                for i in currentgame.players:
-                    print(i.name, ': Your score is ', i.score)
-                print(playernames[currentgame.turn], ', it is your turn. Here are the letters in you rack.')
-                print(currentgame.players[currentgame.turn].rack)
-                inp = input('Do you want to exchange tiles - y/n? (Only possible if the tiles in the pouch are more than 7): ').lower()
-                if inp=='y':
-                    tiles_to_exchange = input('Enter the tiles you want to exchange (enter a space to exchange a blank tile) - \nexample (ABC to exchange A, B and C): ')
-                    tiles_to_exchange = list(tiles_to_exchange)
-                    status = currentgame.exchange(tiles_to_exchange)
-                    if status[0]:
-                        input('Successfully exchanged. Press enter to continue.')
-                        continue
-                    else:
-                        print(status[1])
-                        input('Unsuccessful exchange. Press enter to continue.')
-                        continue
-                print('Tile Scores: ' + ''.join([' '+list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')[x] + '=' + str(scores[x]) + ' ' for x in range(len(scores))]))
-                print('Type the word you want to place on the board. This should contain all the new tiles you are adding.')
-                print('Enter all non-blank tiles as capitals and any blank tiles using the \nsmall letter of the letter you want to use the blank tile as.')
-                playerinput = []
-                playerinput.append(str(input('Word to be played: ')))
-                print('Where is the first letter of the word you made on the board?')
-                playerinput.append(
-                    [int(input('Enter the row number here: ')), int(input('Enter the column number here: '))])
-                print('Is your word vertically placed or horizontally placed?')
-                playerinput.append(str(input('Enter v or h here: ')).lower())
-                scrabbleit = currentgame.scrabbleit(playerinput)
-                if scrabbleit[0]:
-                    cont = True
-                    reply = input('Enter Q to quit without saving, S to save the game and quit, and anything else to continue: ')
-                    if reply == 'S':
-                        currentgame.save(
-                            filename=input('Enter the name of the saved file (press enter to use the default): '))
-                        exit()
-                    elif reply == 'Q':
-                        exit()
-                    else:
-                        reply = 'C'
-                        if scrabbleit[1]:
-                            reply = 'E'
-                else:
-                    print(scrabbleit[1])
-                    print('The input you entered was invalid. Please enter again.')
+    elif status == 'old':
+        savefilename = input('Enter the path of the saved file (press enter for default): ')
+        inp = input("Disable validity mode (forces all words to be checked against a wordlist) (y/n): ").lower()
+        if inp != 'y':
+            filename = input(
+                "Enter the path to a wordlist file. \nKeep empty for the default SOWPODS(format: new words on each new line, no capitals): ")
+            if filename == '':
+                filename = 'wordlist/sowpods.txt'
+            if savefilename == '':
+                currentgame = GameEngine(gamestatus='old', validity_mode=True, filename=filename)
+            else:
+                currentgame = GameEngine(gamestatus='old', validity_mode=True, filename=filename,
+                                         savefilename=savefilename)
+        else:
+            if savefilename == '':
+                currentgame = GameEngine(gamestatus='old', validity_mode=False)
+            else:
+                currentgame = GameEngine(gamestatus='old', validity_mode=False, savefilename=savefilename)
 
-        if reply == 'E':
-            print('The game has ended! Here are your scores: ')
+    reply = 'C'
+    while reply == 'C':
+        cont = False  # A bool allowing to decide for continuing based on the validity of the enetered move
+        while not cont:
+            printer(currentgame.board)
             for i in currentgame.players:
                 print(i.name, ': Your score is ', i.score)
-                finalscores = list(x.score for x in currentgame.players)
-                winner = currentgame.players[finalscores.index(max(finalscores))].name
-                print('The winner is: ', winner)
-                print('!!!!!! Congratulations !!!!!!')
-                print('Game credits @FlyingFordAnglia, @Stochastic13')
-                input()
+            print(currentgame.players[currentgame.turn].name, ', it is your turn. Here are the letters in you rack.')
+            print(currentgame.players[currentgame.turn].rack)
+            inp = input('Do you want to exchange tiles - y/n? (Only possible if the tiles in the pouch are more than 7): ').lower()
+            if inp=='y':
+                tiles_to_exchange = input('Enter the tiles you want to exchange (enter a space to exchange a blank tile) - \nexample (ABC to exchange A, B and C): ')
+                tiles_to_exchange = list(tiles_to_exchange)
+                status = currentgame.exchange(tiles_to_exchange)
+                if status[0]:
+                    input('Successfully exchanged. Press enter to continue.')
+                    continue
+                else:
+                    print(status[1])
+                    input('Unsuccessful exchange. Press enter to continue.')
+                    continue
+            print('Tile Scores: ' + ''.join([' '+list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')[x] + '=' + str(scores[x]) + ' ' for x in range(len(scores))]))
+            print('Type the word you want to place on the board. This should contain all the new tiles you are adding.')
+            print('Enter all non-blank tiles as capitals and any blank tiles using the \nsmall letter of the letter you want to use the blank tile as.')
+            playerinput = []
+            playerinput.append(str(input('Word to be played: ')))
+            print('Where is the first letter of the word you made on the board?')
+            playerinput.append(
+                [int(input('Enter the row number here: ')), int(input('Enter the column number here: '))])
+            print('Is your word vertically placed or horizontally placed?')
+            playerinput.append(str(input('Enter v or h here: ')).lower())
+            scrabbleit = currentgame.scrabbleit(playerinput)
+            if scrabbleit[0]:
+                cont = True
+                reply = input('Enter Q to quit without saving, S to save the game and quit, and anything else to continue: ')
+                if reply == 'S':
+                    filename = input('Enter the name of the saved file (press enter to use the default): ')
+                    if filename != '':
+                        currentgame.save(filename=filename)
+                    else:
+                        currentgame.save()
+                    exit()
+                elif reply == 'Q':
+                    exit()
+                else:
+                    reply = 'C'
+                    if scrabbleit[1]:
+                        reply = 'E'
+            else:
+                print(scrabbleit[1])
+                input('The input you entered was invalid. Please enter again.')
+
+    if reply == 'E':
+        print('The game has ended! Here are your scores: ')
+        for i in currentgame.players:
+            print(i.name, ': Your score is ', i.score)
+            finalscores = list(x.score for x in currentgame.players)
+            winner = currentgame.players[finalscores.index(max(finalscores))].name
+            input()
+        print('The winner is: ', winner)
+        print('!!!!!! Congratulations !!!!!!')
+        print('Game credits @FlyingFordAnglia, @Stochastic13')
+        input()
