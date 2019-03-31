@@ -53,9 +53,5 @@ def endscore(players, turn):  # to score when the game ends (one player empties 
         last_score = 0
         for j in players[i].rack:
             last_score += letters_score[j]
-            players[i].score = players[i].score - letters_score[j]
+            players[i].score -= letters_score[j]
         players[turn].score += last_score
-
-            last_score+=letters_score[j]
-            i.score=i.score-letters_score[j]
-        players[turn].score+=last_score
