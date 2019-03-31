@@ -9,7 +9,7 @@ This program was made as an exercise for fun and some learning, and also is my f
 
 ## Prerequisites
 
-On top of a working Python 3+ installation:
+On top of a working Python 3.5+ installation:
 - `numpy`
 - `termcolor` (optional, strongly recommended)
 - `colorama` (for windows with `termcolor` ; optional, strongly recommended)
