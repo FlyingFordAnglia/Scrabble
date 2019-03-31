@@ -42,6 +42,7 @@ def island_words_tester(positions, board):  # to check if the entered word is in
             test = True
         else:
             adjacent_positions = [(i[0] - 1, i[1]), (i[0] + 1, i[1]),(i[0], i[1] - 1), (i[0], i[1] + 1)]  # checking for adjacency
+            adjacent_positions = [x for x in adjacent_positions if ((x[0] >= 0) and (x[0] < 15)) and ((x[1] >= 0) and (x[1] < 15))]
             for j in adjacent_positions:
                 if board[j[0], j[1]] < 52:
                     test = True
