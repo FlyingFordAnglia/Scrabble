@@ -9,7 +9,7 @@ from modify import move
 
 class GameEngine(object):
 
-    def __init__(self, playernames=None, gamestatus='new', validity_mode=True, filename='wordlist/sowpods.txt'):
+    def __init__(self, playernames=None, gamestatus='new', validity_mode=True, filename='wordlist/sowpods.txt', savefilename='savegame.sv'):
         if gamestatus == 'new':
             self.filename = filename  # file to check for the validity of the word if validity mode is on
             self.validitymode = validity_mode
@@ -23,10 +23,10 @@ class GameEngine(object):
         else:
             self.filename = filename
             self.validitymode = validity_mode
-            savedgame = loadgame(filename)
+            savedgame = loadgame(savefilename)
             self.board = savedgame[0]
             self.numberofplayers = len(savedgame[1])
-            self.players = list(map(player, (savedgame[3], savedgame[2], savedgame[1])))
+            self.players = list(map(player, savedgame[3], savedgame[2], savedgame[1]))
             self.turn = savedgame[4]
             self.pouch = pouch()
             self.pouch.loadpouch(self.board, savedgame[1])
